@@ -34,8 +34,8 @@ class Channel:
         yt_chanel_all_info = cls.youtube.channels().list(id=channel_id, part='snippet,statistics').execute()
         return yt_chanel_all_info
 
-    @staticmethod
-    def get_service():
+    @classmethod
+    def get_service(cls):
         """Возвращает объект для работы с YouTube API"""
         api_object = Channel.youtube
         return api_object
