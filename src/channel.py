@@ -40,7 +40,7 @@ class Channel:
         api_object = Channel.youtube
         return api_object
 
-    #return json.dumps(self.id, indent=2, ensure_ascii=False, sort_keys=True, separators=(',', ': '))
+    # return json.dumps(self.id, indent=2, ensure_ascii=False, sort_keys=True, separators=(',', ': '))
 
     def print_info(self):
         """Выводит в консоль информацию о канале."""
@@ -50,3 +50,34 @@ class Channel:
         """Cоздает файл 'filename' в данными по каналу"""
         with open(filename, 'w') as sys.stdout:
             print(self.info)
+
+    def __str__(self):
+        return self.title + f" ({self.url})"
+
+    def __sub__(self, other):
+        """Метод для операции вычитания"""
+        return int(self.subscribers) - int(other.subscribers)
+
+    def __add__(self, other):
+        """Метод для операции сложения подписчиков"""
+        return int(self.subscribers) + int(other.subscribers)
+
+    def __eq__(self, other):
+        """Метод для проверки равенства кол-ва подписчиков"""
+        return int(self.subscribers) == int(other.subscribers)
+
+    def __lt__(self, other):
+        """Метод для проверки того что подписчиков меньше чем у другого канала"""
+        return int(self.subscribers) < int(other.subscribers)
+
+    def __le__(self, other):
+        """Метод для проверки того что подписчиков меньше или равно чем у другого канала"""
+        return int(self.subscribers) <= int(other.subscribers)
+
+    def __gt__(self, other):
+        """Метод для проверки того что подписчиков больше чем у другого канала"""
+        return int(self.subscribers) > int(other.subscribers)
+
+    def __ge__(self, other):
+        """Метод для операции проверки того что подписчиков больше или равно чем у другого канала"""
+        return int(self.subscribers) >= int(other.subscribers)
