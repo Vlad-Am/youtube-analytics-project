@@ -2,7 +2,7 @@ import os
 
 import isodate
 from googleapiclient.discovery import build
-from datetime import timedelta, datetime
+from datetime import timedelta
 
 
 class PlayList:
@@ -12,13 +12,13 @@ class PlayList:
 
     def __init__(self, playlist_id):
         """инициализируется по 'id плейлиста' """
-        self.playlist_info = PlayList.video_response(playlist_id)
+        self.playlist_info = PlayList.playlist_response(playlist_id)
         self.playlist_id = self.playlist_info['items'][0]['contentDetails']['videoId']
         self.title = self.playlist_info['items'][0]['snippet']['title']
         self.url = f'https://www.youtube.com/playlist?list={playlist_id}'
 
     @classmethod
-    def video_response(cls, playlist_id):
+    def playlist_response(cls, playlist_id):
         playlist_response = cls.youtube.playlistItems().list(playlistId=playlist_id,
                                                              part='contentDetails, snippet',
                                                              maxResults=50).execute()
