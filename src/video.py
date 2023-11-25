@@ -1,10 +1,15 @@
-from src.channel import Channel
+import os
+
+from googleapiclient.discovery import build
 
 
-class Video(Channel):
+class Video:
+    api_key: str = os.getenv('YOUTUBE_API_KEY')
+
+    youtube = build('youtube', 'v3', developerKey=api_key)
 
     def __init__(self, id_video):
-        """инициализируется по id видео"""
+        """Инициализируется по id видео"""
         self.id_video = id_video
         self.info = Video.create_video_response(id_video)
         self.name_video = self.info['items'][0]['snippet']['title']
