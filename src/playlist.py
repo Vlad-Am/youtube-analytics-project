@@ -19,17 +19,22 @@ class PlayList:
 
     @classmethod
     def playlist_response(cls, playlist_id):
+        """Создание объекта для работы с информацией плейлста"""
         playlist_response = cls.youtube.playlistItems().list(playlistId=playlist_id,
                                                              part='contentDetails, snippet',
                                                              maxResults=50).execute()
         return playlist_response
 
     def show_best_video(self):
+        """Возвращает ссылку на лучшее видео"""
+        #создаем спиосок id всех видео из плейлиста
         video_ids: list[str] = [video['contentDetails']['videoId'] for video in self.playlist_info['items']]
+        #создаем объекты для работы через api с каждым из видео, через join
         video_response = self.youtube.videos().list(part='contentDetails,statistics',
                                                     id=','.join(video_ids)
                                                     ).execute()
         max_like_count = 0
+        #цикл по видео из плейлиста и поиск лучшего
         for video in video_response["items"]:
             like = video["statistics"]["likeCount"]
             if max_like_count < int(like):
@@ -39,11 +44,13 @@ class PlayList:
 
     @property
     def total_duration(self):
+        """Возвращет общую продолжительность плейлиста"""
         video_ids: list[str] = [video['contentDetails']['videoId'] for video in self.playlist_info['items']]
         video_response = self.youtube.videos().list(part='contentDetails,statistics',
                                                     id=','.join(video_ids)
                                                     ).execute()
         time_all_duration = timedelta(seconds=0)
+
         for video in video_response['items']:
             # # YouTube video duration is in ISO 8601 format
             iso_8601_duration = video['contentDetails']['duration']

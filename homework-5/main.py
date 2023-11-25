@@ -10,6 +10,8 @@ if __name__ == '__main__':
     duration = pl.total_duration
     assert str(duration) == "1:49:52"
     assert isinstance(duration, datetime.timedelta)
+    # тут не понял как отработала функция total_seconds, если ее у меня нет, я ее пытался сделать
+    # как то не получилось
     assert duration.total_seconds() == 6592.0
 
     assert pl.show_best_video() == "https://youtu.be/cUGyMzWQcGM"
