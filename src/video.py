@@ -18,7 +18,8 @@ class Video:
             self.count_views = self.info['items'][0]['statistics']['viewCount']
             self.count_likes = self.info['items'][0]['statistics']['likeCount']
         except Exception:
-            raise Exception("Некорректный id видео")
+            self.name_video = self.url_video = self.count_views = count_likes = None
+            print(f"Некорректный id видео")
 
     @classmethod
     def create_video_response(cls, id_video):
